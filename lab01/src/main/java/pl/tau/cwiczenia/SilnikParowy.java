@@ -7,21 +7,29 @@ package pl.tau.cwiczenia;
 
  public class SilnikParowy {
      
-     private int objetoscPracy;
-     private int iloscPary = 0;
-     private boolean tlokWysuniety = false;
+     private int _objetoscPracy;
+     private int _iloscPary = 0;
+     private boolean _tlokWysuniety = false;
 
      public SilnikParowy(int objetoscPracy) {
-         this.objetoscPracy = objetoscPracy;
+         this._objetoscPracy = objetoscPracy;
      }
 
-     public pobierzPare(int iloscPary) {
-         if((this.iloscPary < this.objetoscPracy))
-            this.iloscPary += iloscPary;
+     public void pobierzPare(int iloscPary) {
+         if((this._iloscPary < this._objetoscPracy))
+            this._iloscPary += iloscPary;
         else {
-            this.iloscPary = 0;
-            this.tlokWysuniety = true;
+            this._iloscPary = 0;
+            this._tlokWysuniety = true;
         }
      }
-
+     
+     public boolean tlokWysuniety() {
+    	 return _tlokWysuniety;
+     }
+     
+     public int iloscPary() {
+    	 return _iloscPary;
+     }
+ 
  }

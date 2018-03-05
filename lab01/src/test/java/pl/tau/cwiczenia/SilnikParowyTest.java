@@ -11,11 +11,11 @@ public class SilnikParowyTest {
         int objetoscDzialania = 3000;
         SilnikParowy silnik = new SilnikParowy(objetoscDzialania);
         assertNotNull(silnik);
-        assertFalse(slinik.tlokWysuniety());
-        slinik.pobierzPare(1000);
-        assertFalse(slinik.tlokWysuniety());
+        assertFalse(silnik.tlokWysuniety());
+        silnik.pobierzPare(1000);
+        assertFalse(silnik.tlokWysuniety());
         silnik.pobierzPare(2000);
-        assertTrue(slinik.tlokWysuniety());
+        assertTrue(silnik.tlokWysuniety());
         assertEquals(silnik.iloscPary(), 0);
 
     }
