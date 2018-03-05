@@ -16,8 +16,9 @@ package pl.tau.cwiczenia;
      }
 
      public void pobierzPare(int iloscPary) {
-         if((this._iloscPary < this._objetoscPracy))
+         if((this._iloscPary + iloscPary < this._objetoscPracy)) {
             this._iloscPary += iloscPary;
+         }
         else {
             this._iloscPary = 0;
             this._tlokWysuniety = true;

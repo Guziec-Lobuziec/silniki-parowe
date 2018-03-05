@@ -14,7 +14,7 @@ public class SilnikParowyTest {
         assertFalse(silnik.tlokWysuniety());
         silnik.pobierzPare(1000);
         assertFalse(silnik.tlokWysuniety());
-        silnik.pobierzPare(2000);
+        silnik.pobierzPare(3000);
         assertTrue(silnik.tlokWysuniety());
         assertEquals(silnik.iloscPary(), 0);
 
