@@ -145,12 +145,16 @@ public class SteamEngineCRUDTest {
 		SteamEngine changed = selectedOpt.get();
 		changed.setName("test");
 		
-		SteamEngine updated = repository.update(changed);
+		repository.update(changed);
+		
+		Optional<SteamEngine> fromDb = repository.selectWithId(changed.getId());
+		
+		assertTrue(fromDb.isPresent());
 		
 		Collection<SteamEngine> got = repository.selectAll();
 		
 		assertTrue(got.containsAll(samples));
 		
-		assertEquals(updated.getName(), changed.getName());
+		assertEquals(fromDb.get(), changed);
 	}
 }
