@@ -14,6 +14,7 @@ public interface SteamEngineRepository {
 	public Optional<SteamEngine> selectWithId(Long id);
 	public Boolean delete(Long id);
 	public SteamEngine update(SteamEngine e);
+	public void drop();
 	
 
 }

@@ -1,3 +1,4 @@
 language: java
 script:
-- cd lab01; mvn test
+- cd cwiczenia; cd scripts; ./server.sh &
+- cd ..; sleep 2; mvn test

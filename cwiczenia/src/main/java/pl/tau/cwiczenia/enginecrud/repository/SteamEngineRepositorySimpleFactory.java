@@ -12,9 +12,8 @@ public class SteamEngineRepositorySimpleFactory implements SteamEngineRepository
 	}
 	
 	@Override
-	public SteamEngineRepository createRepository() {
-		// TODO Auto-generated method stub
-		return null;
+	public SteamEngineRepository createRepository() throws SQLException {
+		return new SteamEngineSimpleRepository(connection);
 	}
 
 }

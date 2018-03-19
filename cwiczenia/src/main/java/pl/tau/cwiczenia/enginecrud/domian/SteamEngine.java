@@ -2,6 +2,16 @@ package pl.tau.cwiczenia.enginecrud.domian;
 
 public class SteamEngine {
 
+	public SteamEngine() {
+		super();
+	}
+	
+	public SteamEngine(Long id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
+
 	private Long id;
 	private String name;
 
