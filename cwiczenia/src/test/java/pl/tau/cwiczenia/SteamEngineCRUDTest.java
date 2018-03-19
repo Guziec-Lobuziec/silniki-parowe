@@ -1,5 +1,6 @@
 package pl.tau.cwiczenia;
 
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -23,7 +24,7 @@ public class SteamEngineCRUDTest {
 	private SteamEngineRepository repository;
 	
 	public SteamEngineCRUDTest(SteamEngineRepositoryFactory factory,
-			Collection<SteamEngine> samples) {
+			Collection<SteamEngine> samples) throws SQLException {
 		this.factory = factory;
 		this.samples = samples;
 		repository = factory.createRepository();
