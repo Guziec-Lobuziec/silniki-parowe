@@ -27,3 +27,4 @@ hs_err_pid*
 
 /target/
 /scripts/hsqldb.jar
+/.metadata/
