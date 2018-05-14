@@ -1,5 +1,6 @@
 package pl.tau.cwiczenia.dbunit;
 
+import java.sql.Connection;
 import java.sql.DriverManager;
 
 import org.dbunit.JdbcDatabaseTester;
@@ -12,26 +13,32 @@ import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+import pl.tau.cwiczenia.enginecrud.repository.PipeSimpleRepository;
 import pl.tau.cwiczenia.enginecrud.repository.SteamEngineSimpleRepository;
+
+
+
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-	SteamEngineDbUnitTest.class
+	SteamEngineDbUnitTest.class,
+	PipeDbUnitTest.class
 })
 public class SteamEngineTests {
 	
 	@BeforeClass
 	public static void before() throws Exception {
-         String url = "jdbc:hsqldb:hsql://localhost/workdb";
+       String url = "jdbc:hsqldb:hsql://localhost/workdb";
+       Connection connection = DriverManager.getConnection(url);
 
-       new SteamEngineSimpleRepository(DriverManager.getConnection(url));
+       new PipeSimpleRepository(connection);
        System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_DRIVER_CLASS, "org.hsqldb.jdbcDriver" );
        System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_CONNECTION_URL, "jdbc:hsqldb:hsql://localhost/workdb" );
        System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_USERNAME, "sa" );
        System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_PASSWORD, "" );
 
        JdbcDatabaseTester databaseTester = new PropertiesBasedJdbcDatabaseTester();
-
+       
        FlatXmlDataSet dataSet = new FlatXmlDataSetBuilder().build(
            SteamEngineTests.class.getClassLoader().
                        getResource("setup-ds.xml").openStream()

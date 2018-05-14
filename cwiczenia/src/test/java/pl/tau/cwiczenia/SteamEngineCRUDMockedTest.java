@@ -94,14 +94,14 @@ public class SteamEngineCRUDMockedTest {
 	public SteamEngineCRUDMockedTest() {
 		
 		this.samples = Arrays.asList(new SteamEngine[] {
-	    		new SteamEngine(new Long(0), "t0"),
-	    		new SteamEngine(new Long(1), "t1"),
-	    		new SteamEngine(new Long(2), "t2"),
-	    		new SteamEngine(new Long(3), "t3"),
-	    		new SteamEngine(new Long(4), "t4"),
-	    		new SteamEngine(new Long(5), "t5"),
-	    		new SteamEngine(new Long(6), "t6"),
-	    		new SteamEngine(new Long(7), "t7"),
+	    		new SteamEngine(new Long(0), "t0", new ArrayList<>()),
+	    		new SteamEngine(new Long(1), "t1", new ArrayList<>()),
+	    		new SteamEngine(new Long(2), "t2", new ArrayList<>()),
+	    		new SteamEngine(new Long(3), "t3", new ArrayList<>()),
+	    		new SteamEngine(new Long(4), "t4", new ArrayList<>()),
+	    		new SteamEngine(new Long(5), "t5", new ArrayList<>()),
+	    		new SteamEngine(new Long(6), "t6", new ArrayList<>()),
+	    		new SteamEngine(new Long(7), "t7", new ArrayList<>()),
 	    	});
 		
 	}
@@ -172,7 +172,7 @@ public class SteamEngineCRUDMockedTest {
 	@Test
 	public void saveTest() throws SQLException {
 		
-		SteamEngine e = new SteamEngine(null,"saveTest1");
+		SteamEngine e = new SteamEngine(null,"saveTest1", new ArrayList<>());
 		
 		ResultSet mockSaveResult = mock(ResultSet.class);
 		ResultSet mockSelectWithIdResult = mock(ResultSet.class);

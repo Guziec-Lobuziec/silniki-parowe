@@ -74,7 +74,7 @@ public abstract class AbstractSteamEngineCRUDTest {
 	@Test
 	public void saveTest() {
 		
-		SteamEngine e = new SteamEngine(null,"saveTest1");
+		SteamEngine e = new SteamEngine(null,"saveTest1",new ArrayList<>());
 		
 		assertNull(e.getId());
 		

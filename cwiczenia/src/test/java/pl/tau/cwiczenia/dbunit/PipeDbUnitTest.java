@@ -12,19 +12,24 @@ import org.dbunit.dataset.filter.DefaultColumnFilter;
 import org.dbunit.operation.DatabaseOperation;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import pl.tau.cwiczenia.enginecrud.domian.SteamEngine;
+import pl.tau.cwiczenia.enginecrud.domian.Pipe;
+import pl.tau.cwiczenia.enginecrud.repository.PipeRepository;
 import pl.tau.cwiczenia.enginecrud.repository.PipeSimpleRepository;
 import pl.tau.cwiczenia.enginecrud.repository.SteamEngineRepository;
 import pl.tau.cwiczenia.enginecrud.repository.SteamEngineSimpleRepository;
 
-@RunWith(JUnit4.class)
-public class SteamEngineDbUnitTest extends AbstractDbUnitTest {
 
-	private SteamEngineRepository repository;
+
+@RunWith(JUnit4.class)
+public class PipeDbUnitTest extends AbstractDbUnitTest {
+
+	private SteamEngineRepository engineRepository;
+	private PipeRepository pipeRepository;
 
 	@After
 	public void tearDown() throws Exception {
@@ -35,13 +40,14 @@ public class SteamEngineDbUnitTest extends AbstractDbUnitTest {
 	public void setUp() throws Exception {
 		super.setUp();
 		Connection connection = DriverManager.getConnection(url);
-		repository = new SteamEngineSimpleRepository(connection, new PipeSimpleRepository(connection));
+		pipeRepository = new PipeSimpleRepository(connection);
+		engineRepository = new SteamEngineSimpleRepository(connection, pipeRepository);
 	}
 
 	@Test
 	public void selectAllTest() throws Exception {
 		
-		assertEquals(6, repository.selectAll().size());
+		assertEquals(4, pipeRepository.selectAll().size());
 		
 		checkAgainstDataSet("setup-ds.xml");
 	}
@@ -49,31 +55,33 @@ public class SteamEngineDbUnitTest extends AbstractDbUnitTest {
 	@Test
 	public void saveTest() throws Exception {
 
-		SteamEngine engine = new SteamEngine();
-		engine.setName("added");
+		Pipe pipe = new Pipe();
+		pipe.setName("added");
+		pipe.setDiameter(new Double(0.3));
+		pipe.setEngine(engineRepository.selectWithId(new Long(4)).get());
 
-		Long saved = repository.save(engine).getId();
+		Long saved = pipeRepository.save(pipe).getId();
 
 		assertNotNull(saved);
 
-		checkAgainstDataSet("save-ds.xml");
+		checkAgainstDataSet("save-pipe-ds.xml");
 		
-		repository.delete(saved);
+		pipeRepository.delete(saved);
 	}
 
 	@Test
 	public void deleteTest() throws Exception {
 		
-		assertTrue(repository.delete(new Long(1)));
+		assertTrue(pipeRepository.delete(new Long(1)));
 		
-		checkAgainstDataSet("delete-ds.xml");
+		checkAgainstDataSet("delete-pipe-ds.xml");
 		
 	}
 
 	@Test
 	public void selectWithIdTest() throws Exception {
 		
-		Optional<SteamEngine> selected = repository.selectWithId(new Long(1));
+		Optional<Pipe> selected = pipeRepository.selectWithId(new Long(1));
 		assertTrue(selected.isPresent());
 		assertEquals(1, selected.get().getId().longValue());
 		assertEquals("t1", selected.get().getName());
@@ -85,15 +93,17 @@ public class SteamEngineDbUnitTest extends AbstractDbUnitTest {
 	@Test
 	public void updateTest() throws Exception {
 		
-		Optional<SteamEngine> selected = repository.selectWithId(new Long(2));
+		Optional<Pipe> selected = pipeRepository.selectWithId(new Long(2));
 		assertTrue(selected.isPresent());
 		
-		SteamEngine toUpdate = new SteamEngine(new Long(2), "updated", new ArrayList<>());
-		SteamEngine updated = repository.update(toUpdate);
+		Pipe toUpdate = new Pipe(selected.get().getId(), "updated", selected.get().getDiameter(), selected.get().getEngine());
+		Pipe updated = pipeRepository.update(toUpdate);
 		assertEquals(toUpdate.getId(), updated.getId());
 		assertEquals(toUpdate.getName(), updated.getName());
+		assertEquals(toUpdate.getDiameter(), updated.getDiameter());
+		assertEquals(toUpdate.getEngine(), updated.getEngine());
 		
-		checkAgainstDataSet("update-ds.xml");
+		checkAgainstDataSet("update-pipe-ds.xml");
 		
 	}
 
@@ -114,12 +124,13 @@ public class SteamEngineDbUnitTest extends AbstractDbUnitTest {
 	
 	private void checkAgainstDataSet(String set) throws Exception {
 		IDataSet dbDataSet = this.getConnection().createDataSet();
-		ITable actualTable = dbDataSet.getTable("STEAMENGINE");
+		ITable actualTable = dbDataSet.getTable("PIPE");
 		ITable filteredTable = DefaultColumnFilter.excludedColumnsTable(actualTable, new String[] { "ID" });
 		IDataSet expectedDataSet = getDataSet(set);
-		ITable expectedTable = DefaultColumnFilter.excludedColumnsTable(expectedDataSet.getTable("STEAMENGINE"), new String[] { "ID" });
+		ITable expectedTable = DefaultColumnFilter.excludedColumnsTable(expectedDataSet.getTable("PIPE"), new String[] { "ID" });
 
 		Assertion.assertEquals(expectedTable, filteredTable);
 	}
+
 
 }

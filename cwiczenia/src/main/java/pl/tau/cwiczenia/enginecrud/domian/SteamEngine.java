@@ -1,19 +1,25 @@
 package pl.tau.cwiczenia.enginecrud.domian;
 
-public class SteamEngine {
+import java.util.ArrayList;
+import java.util.List;
 
+public class SteamEngine {
+	
+	private Long id;
+	private String name;
+	private List<Pipe> pipes;
+	
 	public SteamEngine() {
 		super();
+		this.pipes = new ArrayList<>();
 	}
 	
-	public SteamEngine(Long id, String name) {
+	public SteamEngine(Long id, String name, List<Pipe> pipes) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.pipes = pipes;
 	}
-
-	private Long id;
-	private String name;
 
 	public Long getId() {
 		return id;
@@ -29,6 +35,14 @@ public class SteamEngine {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public List<Pipe> getPipes() {
+		return pipes;
+	}
+
+	public void setPipes(List<Pipe> pipes) {
+		this.pipes = pipes;
 	}
 
 	@Override
