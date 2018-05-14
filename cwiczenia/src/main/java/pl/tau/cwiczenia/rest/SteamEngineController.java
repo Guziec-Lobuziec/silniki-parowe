@@ -59,6 +59,9 @@ public class SteamEngineController {
 	@RequestMapping(path= "/steamengine", method = RequestMethod.POST)
 	public Object addNew(@RequestBody SteamEngine engine) {
 		
+		if(engine.getId() == null)
+			return repository.save(engine);
+		
 		if(!repository.selectWithId(engine.getId()).isPresent())
 			return repository.save(engine);
 		else
